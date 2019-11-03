@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -16,10 +18,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button, button2, button3, button4, button6, button7, button8, button9, button10, button11, button12, button13, button14, button15, button16, button17, button18, button19, button20, button21;
     TextView  txtRes;
     EditText txtOp;
-    double result;
-    String operador;
-    String mostrar;
-    String reserva;
+
+    double num1=0, num2=0, result=0;
+    String mos1="", mos2="";
+    String mostrar="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button20.setOnClickListener(this);
             button21.setOnClickListener(this);
 
-
         }
-
 
         button.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -79,167 +80,441 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button17.setOnClickListener(this);
         button18.setOnClickListener(this);
 
-
-
     }
 
     @Override
     public void onClick(View view) {
     switch (view.getId()){
         case R.id.button: {
+            txtOp.setText("");
             mostrar = "";
-            txtOp.setText(mostrar);
-            reserva = "";
-            operador = "";
+            mos1 = "";
+            mos2 = "";
+            result=0;
+            txtOp.setText("");
+            txtRes.setText("");
+            num1 = 0;
+            num2 = 0;
+
 
         }break;
 
         case R.id.button2:{
-        mostrar = txtOp.getText().toString();
-        mostrar = mostrar.substring(0,mostrar.length()-1);
-        txtOp.setText(mostrar);
+            String text = txtOp.getText().toString();
+            text = text.substring(0, text.length()-1);
+            txtOp.setText(text);
+            txtOp.setSelection(txtOp.getText().length());
+
+            if (!mos2.isEmpty()){
+                String Text2 = mos2;
+                mos2 = Text2.substring(0, Text2.length()-1);
+            }else if (!mos1.isEmpty()){
+                String Text1 = mos1;
+                mos1 = Text1.substring(0, Text1.length()-1);
+            }
 
         }break;
 
         case R.id.button3:{
 
-            reserva = txtOp.getText().toString();
-            operador =  "+";
-            txtOp.setText("");
+            if (txtOp.getText().length() != 0){
+                String text = txtOp.getText().toString();
+                if (text.charAt(text.length()-1) == '/' || text.charAt(text.length()-1) == '-' || text.charAt(text.length()-1) == '*'){
+
+                    text = text.substring(0, text.length()-1);
+                    txtOp.setText(text + "+");
+                    txtOp.setSelection(txtOp.getText().length());
+                }else {
+                    txtOp.setText(txtOp.getText() + "+");
+                    txtOp.setSelection(txtOp.getText().length());
+                }
+            }
+            mostrar = "+";
+
+            if (!mos2.isEmpty() && result != 0) {
+                num2 = Double.parseDouble(mos2);
+
+                result = result + num2;
+                txtRes.setText(String.valueOf(result));
+                num1 = 0;
+                num2 = 0;
+                mos1 = "";
+                mos2 = "";
+            }
 
         }break;
 
         case R.id.button4:{
+            if (txtOp.getText().length() != 0){
+                String text = txtOp.getText().toString();
+                if (text.charAt(text.length()-1) == '/' || text.charAt(text.length()-1) == '+' || text.charAt(text.length()-1) == '*'){
 
-            reserva = txtOp.getText().toString();
-            operador = "-";
-            txtOp.setText("");
+                    text = text.substring(0, text.length()-1);
+                    txtOp.setText(text + "-");
+                    txtOp.setSelection(txtOp.getText().length());
+                }else {
+                    txtOp.setText(txtOp.getText() + "-");
+                    txtOp.setSelection(txtOp.getText().length());
+                }
+            }
+            mostrar = "-";
+
+            if (!mos2.isEmpty() && result != 0){
+                num2 = Double.parseDouble(mos2);
+
+                result = result - num2;
+                txtRes.setText(String.valueOf(result));
+                num1 = 0;
+                num2 = 0;
+                mos1 = "";
+                mos2 = "";
+            }
+
 
         }break;
 
         case R.id.button6:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "7";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "7");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos1 = mos1 + 7;
+            }else{
+                txtOp.setText(txtOp.getText() + "7");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 7;
+            }
 
         }break;
 
         case R.id.button7:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "8";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "8");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos1 = mos1 + 8;
+            }else{
+                txtOp.setText(txtOp.getText() + "8");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 8;
+            }
 
         }break;
 
         case R.id.button8:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "9";
-            txtOp.setText(mostrar);
 
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "9");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos1 = mos1 + 9;
+            }else{
+                txtOp.setText(txtOp.getText() + "9");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 9;
+            }
         }break;
 
         case R.id.button9:{
-            reserva = txtOp.getText().toString();
-            operador = "/";
-            txtOp.setText("");
+            if (txtOp.getText().length() != 0){
+                String text = txtOp.getText().toString();
+                if (text.charAt(text.length()-1) == '*' || text.charAt(text.length()-1) == '+' || text.charAt(text.length()-1) == '-'){
+
+                    text = text.substring(0, text.length()-1);
+                    txtOp.setText(text + "/");
+                    txtOp.setSelection(txtOp.getText().length());
+                }else {
+                    txtOp.setText(txtOp.getText() + "/");
+                    txtOp.setSelection(txtOp.getText().length());
+                }
+            }
+            mostrar = "/";
+
+            if (!mos2.isEmpty() && result != 0){
+                num2 = Double.parseDouble(mos2);
+
+                result = result / num2;
+                txtRes.setText(String.valueOf(result));
+                num1 = 0;
+                num2 = 0;
+                mos1 = "";
+                mos2 = "";
+            }
 
         }break;
 
         case R.id.button10:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "4";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "4");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos1 = mos1 + 4;
+            }else{
+                txtOp.setText(txtOp.getText() + "4");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 4;
+            }
 
         }break;
 
         case R.id.button11:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "5";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "5");
+                txtOp.setSelection(txtOp.getText().length());
 
+                mos1 = mos1 + 5;
+            }else{
+                txtOp.setText(txtOp.getText() + "5");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 5;
+            }
         }break;
 
         case R.id.button12:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "6";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "6");
+                txtOp.setSelection(txtOp.getText().length());
 
+                mos1 = mos1 + 6;
+            }else{
+                txtOp.setText(txtOp.getText() + "6");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 6;
+            }
         }break;
 
         case R.id.button13:{
-            reserva = txtOp.getText().toString();
-            operador = "*";
-            txtOp.setText("");
+            if (txtOp.getText().length() != 0){
+                String text = txtOp.getText().toString();
+                if (text.charAt(text.length()-1) == '/' || text.charAt(text.length()-1) == '+' || text.charAt(text.length()-1) == '-'){
+
+                    text = text.substring(0, text.length()-1);
+                    txtOp.setText(text + "*");
+                    txtOp.setSelection(txtOp.getText().length());
+                }else {
+                    txtOp.setText(txtOp.getText() + "*");
+                    txtOp.setSelection(txtOp.getText().length());
+                }
+            }
+            mostrar = "*";
+
+            if (!mos2.isEmpty() && result != 0){
+                num2 = Double.parseDouble(mos2);
+
+                result = result * num2;
+                txtRes.setText(String.valueOf(result));
+                num1 = 0;
+                num2 = 0;
+                mos1 = "";
+                mos2 = "";
+            }
 
         }break;
 
         case R.id.button14:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "1";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "1");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos1 = mos1 + 1;
+            }else{
+                txtOp.setText(txtOp.getText() + "1");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 1;
+            }
         }break;
 
         case R.id.button15:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "2";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "2");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos1 = mos1 + 2;
+            }else{
+                txtOp.setText(txtOp.getText() + "2");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 2;
+            }
         }break;
 
         case R.id.button16:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "3";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "3");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos1 = mos1 + 3;
+            }else{
+                txtOp.setText(txtOp.getText() + "3");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 3;
+            }
         }break;
 
         case R.id.button17:{
-            mostrar = txtRes.getText().toString();
-            mostrar = mostrar + "1";
+            if (mostrar == "+"){
+                if (result == 0) {
+                    if (!mos1.isEmpty() && !mos2.isEmpty()) {
+                        num1 = Double.parseDouble(mos1);
+                        num2 = Double.parseDouble(mos2);
 
-            if (operador.equals("+")){
-                result = Double.parseDouble(reserva) + Double.parseDouble(txtOp.getText().toString());
-                txtRes.setText(String.valueOf(result));
-            }
-            if (operador.equals("-")){
-                result = Double.parseDouble(reserva) - Double.parseDouble(txtOp.getText().toString());
-                txtRes.setText(String.valueOf(result));
-            }
-            if (operador.equals("*")){
-                result = Double.parseDouble(reserva) * Double.parseDouble(txtOp.getText().toString());
-                txtRes.setText(String.valueOf(result));
-            }
-            if (operador.equals("/")){
-                result = Double.parseDouble(reserva) / Double.parseDouble(txtOp.getText().toString());
-                txtRes.setText(String.valueOf(result));
-            }
+                        result = num1 + num2;
+                        txtRes.setText(String.valueOf(result));
+                        num1 = 0;
+                        num2 = 0;
+                        mos1 = "";
+                        mos2 = "";
+                    }
+                }else{
+                    if (!mos2.isEmpty()) {
+                        num2 = Double.parseDouble(mos2);
 
+                        result = result + num2;
+                        txtRes.setText(String.valueOf(result));
+                        num1 = 0;
+                        num2 = 0;
+                        mos1 = "";
+                        mos2 = "";
+                    }
+                }
+            }else if (mostrar == "-"){
+                if (result == 0) {
+                    if (!mos1.isEmpty() && !mos2.isEmpty()) {
+                        num1 = Double.parseDouble(mos1);
+                        num2 = Double.parseDouble(mos2);
+
+                        result = num1 - num2;
+                        txtRes.setText(String.valueOf(result));
+                        num1 = 0;
+                        num2 = 0;
+                        mos1 = "";
+                        mos2 = "";
+                    }
+                }else{
+                    if (!mos2.isEmpty()) {
+                        num2 = Double.parseDouble(mos2);
+
+                        result = result - num2;
+                        txtRes.setText(String.valueOf(result));
+                        num1 = 0;
+                        num2 = 0;
+                        mos1 = "";
+                        mos2 = "";
+                    }
+                }
+            }else if (mostrar == "*"){
+                if (result == 0) {
+                    if (!mos1.isEmpty() && !mos2.isEmpty()) {
+                        num1 = Double.parseDouble(mos1);
+                        num2 = Double.parseDouble(mos2);
+
+                        result = num1 * num2;
+                        txtRes.setText(String.valueOf(result));
+                        num1 = 0;
+                        num2 = 0;
+                        mos1 = "";
+                        mos2 = "";
+                    }
+                }else{
+                    if (!mos2.isEmpty()) {
+                        num2 = Double.parseDouble(mos2);
+
+                        result = result * num2;
+                        txtRes.setText(String.valueOf(result));
+                        num1 = 0;
+                        num2 = 0;
+                        mos1 = "";
+                        mos2 = "";
+                    }
+                }
+            }else if (mostrar == "/"){
+                if (result == 0) {
+                    if (!mos1.isEmpty() && !mos2.isEmpty()) {
+                        num1 = Double.parseDouble(mos1);
+                        num2 = Double.parseDouble(mos2);
+
+                        result = num1 / num2;
+                        txtRes.setText(String.valueOf(result));
+                        num1 = 0;
+                        num2 = 0;
+                        mos1 = "";
+                        mos2 = "";
+                    }
+                }else{
+                    if (!mos2.isEmpty()) {
+                        num2 = Double.parseDouble(mos2);
+
+                        result = result / num2;
+                        txtRes.setText(String.valueOf(result));
+                        num1 = 0;
+                        num2 = 0;
+                        mos1 = "";
+                        mos2 = "";
+                    }
+                }
+            }
+            txtOp.setText("");
         }break;
 
         case R.id.button18:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "0";
-            txtOp.setText(mostrar);
+            if (mostrar.isEmpty()) {
+                txtOp.setText(txtOp.getText() + "0");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos1 = mos1 + 0;
+            }else{
+                txtOp.setText(txtOp.getText() + "0");
+                txtOp.setSelection(txtOp.getText().length());
+
+                mos2 = mos2 + 0;
+            }
 
         }break;
 
         case R.id.button19:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + "(";
-            txtOp.setText(mostrar);
+            txtOp.setText(txtOp.getText() + "(");
+            txtOp.setSelection(txtOp.getText().length());
 
         }break;
 
         case R.id.button20:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + ")";
-            txtOp.setText(mostrar);
+            txtOp.setText(txtOp.getText() + ")");
+            txtOp.setSelection(txtOp.getText().length());
 
         }break;
 
         case R.id.button21:{
-            mostrar = txtOp.getText().toString();
-            mostrar = mostrar + ".";
-            txtOp.setText(mostrar);
-
+            if (mostrar.isEmpty()) {
+                if (txtOp.getText().length() != 0) {
+                    String text = txtOp.getText().toString();
+                    if (text.charAt(text.length() - 1) != '*' && text.charAt(text.length() - 1) != '+' && text.charAt(text.length() - 1) != '-' && text.charAt(text.length() - 1) != '/' && text.charAt(text.length() - 1) != '(' && text.charAt(text.length() - 1) != ')'&& text.charAt(text.length() - 1) != '.') {
+                        if (mos1.contains(".") == false){
+                            txtOp.setText(txtOp.getText() + ".");
+                            txtOp.setSelection(txtOp.getText().length());
+                            mos1 = mos1 + ".";
+                        }
+                    }
+                }
+            }else{
+                if (txtOp.getText().length() != 0) {
+                    String text = txtOp.getText().toString();
+                    if (text.charAt(text.length() - 1) != '*' && text.charAt(text.length() - 1) != '+' && text.charAt(text.length() - 1) != '-' && text.charAt(text.length() - 1) != '/' && text.charAt(text.length() - 1) != '(' && text.charAt(text.length() - 1) != ')'&& text.charAt(text.length() - 1) != '.') {
+                        if (mos2.contains(".") == false) {
+                            txtOp.setText(txtOp.getText() + ".");
+                            txtOp.setSelection(txtOp.getText().length());
+                            mos2 = mos2 + ".";
+                        }
+                    }
+                }
+            }
         }break;
         default:{
 
@@ -247,14 +522,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     }
+    public String Escribe(double T) {
+        NumberFormat L = new DecimalFormat("##.###");
+        return L.format(T);
+    }
 
 
 }
 
-/*
-private class string (double a){
-        NumberFormat num = new DecimalFormat("##.##");
-        String format = num.format(a);
-        return num.format(a);
-    }
- */
+
